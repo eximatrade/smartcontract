@@ -1,0 +1,28 @@
+init:
+  # A utility contract that shows how deposit calculate profit and make payback
+  # 1st input is the user's static address in currency network
+  # 2nd input is the type of network
+code:
+  user_wallet = msg.data[0]
+  user_amount = msg.datasize
+  ct = net.type
+  days = 90
+  if ct == ETH:
+    dep_extend = user_amount > 10
+    days = 100
+  else:
+    dep_extend = user_amount > (26/100)
+    days = 100
+  if dep_extend == 1:
+    p_c = 155
+  else:
+    p_c = 128
+  dayly = ((user_amount * p_c) + days)
+  if sha3(temp+user_amount*32, days):
+    if contract.balance > 0:
+      send(user_wallet, dayly, (tx.gas - 100))
+    else:
+      stop
+
+
+while false:
